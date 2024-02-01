@@ -1,0 +1,12 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.divInputAdd{
+    display: flex;
+    flex-direction: column;
+}
+
+.inputAdd{
+    height: 40px;
+}
