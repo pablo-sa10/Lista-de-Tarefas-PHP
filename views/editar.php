@@ -1,11 +1,7 @@
 <?php
-
-require_once '../controller/conexao.php';
-require_once '../controller/tarefas.php';
+require_once '../model/tarefas.php';
 require_once '../controller/tarefasController.php';
 
-$conexao = new Conexao;
-$pdo = $conexao->getConexao();
 
 if(isset($_FILES['enviar'])){
     $tarefa = new Tarefa(

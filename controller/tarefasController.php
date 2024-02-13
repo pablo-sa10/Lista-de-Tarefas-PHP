@@ -8,7 +8,7 @@ class TarefaController{
     }
 
     public function getTarefas(){
-        
+        return (new Tarefa)->getTarefas();
     }
 
     /* public function getTarefas(){

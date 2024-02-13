@@ -1,11 +1,9 @@
 <?php
 
-require_once '../model/conexao.php';
 require_once '../controller/tarefasController.php';
-require_once '../controller/tarefas.php';
 
 $tarefaRepositorio = new TarefaController();
-$dadosTarefa = $tarefaRepositorio->getAdiciona();
+$dadosTarefa = $tarefaRepositorio->getTarefas();
 
 ?>
 <!DOCTYPE html>
@@ -58,10 +56,10 @@ $dadosTarefa = $tarefaRepositorio->getAdiciona();
                 <tbody>
                     <?php foreach ($dadosTarefa as $tarefa) : ?>
                         <tr class="border border-5 border-dark">
-                            <td><?= $tarefa->getId() ?></td>
-                            <td class="w-50"><?= $tarefa->getTarefa() ?></td>
-                            <td class="text-center"><?= $tarefa->getInicio() ?></td>
-                            <td class="text-center"><?= $tarefa->getFim() ?></td>
+                            <td><?= $tarefa->ID ?></td>
+                            <td class="w-50"><?= $tarefa->TAREFA ?></td>
+                            <td class="text-center"><?= $tarefa->INICIO ?></td>
+                            <td class="text-center"><?= $tarefa->FIM ?></td>
                             <td><a href="./editar.php" <?= $tarefa->getId() ?> class="btn btn-primary"><i class="bi bi-pencil-fill"></i></a></td>
                             <td><a href="../controller/excluir.php?id=<?= $tarefa->getId() ?>" name="excluir" class="btn btn-danger"><i class="bi bi-trash"></i></a></td>
                         </tr>
