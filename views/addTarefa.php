@@ -1,24 +1,15 @@
 <?php
 
-require_once '../controller/conexao.php';
-require_once '../controller/tarefas.php';
+require_once '../model/tarefas.php';
 require_once '../controller/tarefasController.php';
 
-$conexao = new Conexao();
-$pdo = $conexao->getConexao();
+$tarefaRepositorio = new TarefaController();
 
-if (isset($_POST['enviar'])) {
-    $tarefa = new Tarefa(
-        null,
-        $_POST['tarefa'],
-        $_POST['descricao'],
-        $_POST['inicio'],
-        $_POST['fim']
-    );
-
-    $tarefaRepositorio = new Repositorio($pdo);
-    $tarefaRepositorio->getAdiciona($tarefa);
-
+$tarefa = $_POST['tarefa'];
+$descricao = $_POST['descricao'];
+$fim = $_POST['fim'];
+if(isset($_FILES['enviar'])){
+    $dadosTarefa = $tarefaRepositorio->getAdiciona($tarefa, $descricao, $fim);  
     header('Location: index.php');
 }
 

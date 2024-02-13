@@ -1,27 +1,11 @@
 <?php
 
-require_once '../controller/conexao.php';
+require_once '../model/conexao.php';
 require_once '../controller/tarefasController.php';
 require_once '../controller/tarefas.php';
 
-$conexao = new Conexao();
-$pdo = $conexao->getConexao();
-
-$tarefaRepositorio = new Repositorio($pdo);
-$dadosTarefa = $tarefaRepositorio->getTarefas();
-
-/* if(isset($_POST['excluir'])){
-    $tarefa = new Tarefa(
-        null,
-        $_POST['tarefa'],
-        $_POST['descricao'],
-        $_POST['inicio'],
-        $_POST['fim']
-    );
-    $tarefaRepositorio = new Repositorio($pdo);
-    $tarefaRepositorio->getExcluir($tarefa);
-} */
-
+$tarefaRepositorio = new TarefaController();
+$dadosTarefa = $tarefaRepositorio->getAdiciona();
 
 ?>
 <!DOCTYPE html>
