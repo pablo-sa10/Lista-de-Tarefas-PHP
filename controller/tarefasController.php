@@ -4,11 +4,26 @@ require_once "../model/Tarefa.php";
 class TarefaController{
     
     public function getAdiciona($tarefa, $descricao, $fim){
+        // var_dump([$tarefa, $descricao, $fim]); exit;
         return (new Tarefa)->getAdiciona($tarefa, $descricao, $fim);
     }
 
     public function getTarefas(){
         return (new Tarefa)->getTarefas();
+    }
+
+    public function getIdTarefa($id){
+        return (new Tarefa)->getIdTarefas($id);
+    }
+
+    public function getEdita($id, $tarefa, $descricao, $inicio, $fim){
+        return (new Tarefa)->getEdita($id, $tarefa, $descricao, $inicio, $fim);
+    }
+
+    public function getExcluir(){
+        $id = $_GET['id'];
+        $result = (new Tarefa)->getExcluir($id);
+        echo json_decode($result);
     }
 
     /* public function getTarefas(){

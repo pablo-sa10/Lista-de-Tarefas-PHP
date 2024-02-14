@@ -10,7 +10,7 @@ class Tarefa
     private $inicio;
     private $fim;
 
-    public function __construct($id = null, $tarefa = "", $descricao = "", $inicio = null, $fim = "")
+    public function __construct($id = null, $tarefa = "", $descricao = "", $inicio = null, $fim = null)
     {
         $this->id = $id;
         $this->tarefa = $tarefa;
@@ -60,15 +60,15 @@ class Tarefa
             VALUES (:tarefa, :descricao, GETDATE(), :dataFim)";
 
             $busca = $db->prepare($sql);
-            $busca->bindValue("tarefa", $tarefa, PDO::PARAM_STR);
-            $busca->bindValue("descricao", $descricao, PDO::PARAM_STR);
-            $busca->bindValue("dataFim", $fim);
+            $busca->bindValue(":tarefa", $tarefa, PDO::PARAM_STR);
+            $busca->bindValue(":descricao", $descricao, PDO::PARAM_STR);
+            $busca->bindValue(":dataFim", $fim, PDO::PARAM_STR);
             $busca->execute();
 
-            $resultado = $busca->lastInsertId();
+            $resultado = $db->lastInsertId();
             $busca->closeCursor();
-
-        } catch (PDOException $ex) {
+            
+        }catch (PDOException $ex) {
 
             //EXIBE MENSAGEM AMIGAVEL PARA USUÁRIO
             echo "<a  href='" . $_SERVER['PHP_SELF'] . "'> 
@@ -115,6 +115,106 @@ class Tarefa
             </a>";
             exit(); //NÃO DEIXA CONTINUAR A EXECUÇÃO
         }
+        return $resultado;
+    }
+
+    public function getIdTarefas($id){
+        $db = new Conexao();
+        $db = $db->getConexao();
+
+        try{
+            $sql = "SELECT *--ID, TAREFA, DESCRICAO, INICIO, FIM 
+            FROM tarefas
+            WHERE ID = :id";
+
+            $busca = $db->prepare($sql);
+            $busca->bindValue(':id', $id, PDO::PARAM_INT);
+            $busca->execute();
+
+            $resultado = $busca->fetchAll(PDO::FETCH_OBJ);
+            $busca->closeCursor();
+
+        }catch(PDOException $ex){
+            //EXIBE MENSAGEM AMIGAVEL PARA USUÁRIO
+            echo "<a  href='" . $_SERVER['PHP_SELF'] . "'> 
+                <div class='text-center alert alert-danger ' role='alert'>
+                    <h4 class='alert-heading'> <span class='fas fa-exclamation-triangle'></span>Atenção:<h4>
+                    <hr/>
+                    Erro de Consulta! $ex
+                    <h6>Notifique seu superior ou departamento de Tecnologia</h6>
+                </div>
+            </a>";
+            exit(); //NÃO DEIXA CONTINUAR A EXECUÇÃO
+        }
+
+        return $resultado;
+    }
+
+    public function getEdita($id, $tarefa, $descricao, $inicio, $fim){
+        $db = new Conexao();
+        $db = $db->getConexao();
+
+        try{ $sql = "UPDATE tarefas
+            SET TAREFA = :tarefa
+            ,DESCRICAO = :descricao
+            ,INICIO = :inicio
+            ,FIM = :fim
+            WHERE ID = :id";
+
+            $busca = $db->prepare($sql);
+            $busca->bindValue(':id', $id, PDO::PARAM_INT);
+            $busca->bindValue(':tarefa', $tarefa, PDO::PARAM_STR);
+            $busca->bindValue(':descricao', $descricao, PDO::PARAM_STR);
+            $busca->bindValue(':inicio', $inicio);
+            $busca->bindValue(':fim', $fim);
+            $busca->execute();
+
+            $resultado = $db->lastInsertId();
+            $busca->closeCursor();            
+
+        }catch(PDOException $ex){
+            //EXIBE MENSAGEM AMIGAVEL PARA USUÁRIO
+            echo "<a  href='" . $_SERVER['PHP_SELF'] . "'> 
+                <div class='text-center alert alert-danger ' role='alert'>
+                    <h4 class='alert-heading'> <span class='fas fa-exclamation-triangle'></span>Atenção:<h4>
+                    <hr/>
+                    Erro de Consulta! $ex
+                    <h6>Notifique seu superior ou departamento de Tecnologia</h6>
+                </div>
+            </a>";
+            exit(); //NÃO DEIXA CONTINUAR A EXECUÇÃO
+        }
+
+        return $resultado;
+    }
+
+    public function getExcluir($id){
+        $db = new Conexao();
+        $db = $db->getConexao();
+
+        try{ $sql = "DELETE FROM tarefas
+                     WHERE ID = :id";
+
+            $busca = $db->prepare($sql);
+            $busca->bindValue(':id', $id, PDO::PARAM_INT);
+            $busca->execute();
+
+            $resultado = $db->lastInsertId();
+            $busca->closeCursor();            
+
+        }catch(PDOException $ex){
+            //EXIBE MENSAGEM AMIGAVEL PARA USUÁRIO
+            echo "<a  href='" . $_SERVER['PHP_SELF'] . "'> 
+                <div class='text-center alert alert-danger ' role='alert'>
+                    <h4 class='alert-heading'> <span class='fas fa-exclamation-triangle'></span>Atenção:<h4>
+                    <hr/>
+                    Erro de Consulta! $ex
+                    <h6>Notifique seu superior ou departamento de Tecnologia</h6>
+                </div>
+            </a>";
+            exit(); //NÃO DEIXA CONTINUAR A EXECUÇÃO
+        }
+
         return $resultado;
     }
 }

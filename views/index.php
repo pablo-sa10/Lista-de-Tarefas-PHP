@@ -4,7 +4,6 @@ require_once '../controller/tarefasController.php';
 
 $tarefaRepositorio = new TarefaController();
 $dadosTarefa = $tarefaRepositorio->getTarefas();
-
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -19,7 +18,8 @@ $dadosTarefa = $tarefaRepositorio->getTarefas();
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <!--Js -->
-    <script src="../assets/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="../assets/main.js" defer></script>
 </head>
 
 <body>
@@ -44,7 +44,7 @@ $dadosTarefa = $tarefaRepositorio->getTarefas();
     <section class="container mt-5">
         <form method="post">
             <table class="table">
-                <h1 class="text-center my-4">Suas Tarefas</h1>
+                <h1 id="titulo" class="text-center my-4">Suas Tarefas</h1>
                 <thead>
                     <tr class="border border-5 border-dark">
                         <th class="text-center">ID</th>
@@ -60,15 +60,15 @@ $dadosTarefa = $tarefaRepositorio->getTarefas();
                             <td class="w-50"><?= $tarefa->TAREFA ?></td>
                             <td class="text-center"><?= $tarefa->INICIO ?></td>
                             <td class="text-center"><?= $tarefa->FIM ?></td>
-                            <td><a href="./editar.php" <?= $tarefa->getId() ?> class="btn btn-primary"><i class="bi bi-pencil-fill"></i></a></td>
-                            <td><a href="../controller/excluir.php?id=<?= $tarefa->getId() ?>" name="excluir" class="btn btn-danger"><i class="bi bi-trash"></i></a></td>
+                            <td><a href="./editar.php?id= <?= $tarefa->ID ?>" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></a></td>
+                            <td><button data-id="<?= $tarefa->ID ?>" name="excluir" class="botao btn btn-danger"><i class="bi bi-trash"></i></button></td>
                         </tr>
                     <?php endforeach ?>
                 </tbody>
             </table>
         </form>
         <div class="d-flex justify-content-center mt-4 ">
-            <a href="addTarefa.php" class="btn btn-success p-3 fs-5">Adicionar nova tarefa</a>
+            <a href="./addTarefa.php" class="btn btn-success p-3 fs-5">Adicionar nova tarefa</a>
         </div>
     </section>
 
@@ -76,5 +76,44 @@ $dadosTarefa = $tarefaRepositorio->getTarefas();
 
     </footer>
 </body>
+
+<script>
+
+        const btns = document.querySelectorAll('.botao')
+        btns.forEach((btn) => {
+            var id = $(this).data("id");
+            console.log('aquiii',id)
+            btn.addEventListener('click', (e)=>{
+                e.preventDefault()
+                
+            })
+        })
+    
+    $(document).ready(function() {
+
+        
+
+        function deletar(id) {
+            console.log(id, 'aquii');
+            return;
+
+
+
+            $.ajax({
+            type: "../controller/tarefasController.php",
+            url: "GET",
+            dataType: 'json',
+            data: {
+                method: 'getExcluir',
+                id: id,
+            },
+            success: function (response) {
+                console('excluiu')
+            }
+        });
+        }
+
+    });
+</script>
 
 </html>

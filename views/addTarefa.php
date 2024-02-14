@@ -1,16 +1,18 @@
 <?php
 
-require_once '../model/tarefas.php';
+require_once '../model/tarefa.php';
 require_once '../controller/tarefasController.php';
 
 $tarefaRepositorio = new TarefaController();
 
-$tarefa = $_POST['tarefa'];
-$descricao = $_POST['descricao'];
-$fim = $_POST['fim'];
-if(isset($_FILES['enviar'])){
-    $dadosTarefa = $tarefaRepositorio->getAdiciona($tarefa, $descricao, $fim);  
+if (isset($_POST['enviar'])) {
+    $tarefa = $_POST['tarefa'];
+    $descricao = $_POST['descricao'];
+    $fim = $_POST['fim'];
+    
+    $dadosTarefa = $tarefaRepositorio->getAdiciona($tarefa, $descricao, $fim);
     header('Location: index.php');
+    exit;
 }
 
 ?>
@@ -58,7 +60,7 @@ if(isset($_FILES['enviar'])){
             <textarea class="w-100" name="descricao" rows="10"></textarea>
         </div>
         <div>
-            <p>Data de ínicio: <input type="date" name="inicio"></p>
+           <!--  <p>Data de ínicio: <input type="date" name="inicio"></p> -->
             <p>Meta até: <input type="date" name="fim"></p>
         </div>
         <div class="d-flex justify-content-center mt-5 mb-3">
