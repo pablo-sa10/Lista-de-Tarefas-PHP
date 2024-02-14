@@ -47,7 +47,6 @@ $dadosTarefa = $tarefaRepositorio->getTarefas();
                 <h1 id="titulo" class="text-center my-4">Suas Tarefas</h1>
                 <thead>
                     <tr class="border border-5 border-dark">
-                        <th class="text-center">ID</th>
                         <th class="">TAREFA</th>
                         <th class="text-center">DATA DE ÍNICIO</th>
                         <th class="text-center">DATA FINAL</th>
@@ -56,8 +55,7 @@ $dadosTarefa = $tarefaRepositorio->getTarefas();
                 <tbody>
                     <?php foreach ($dadosTarefa as $tarefa) : ?>
                         <tr class="border border-5 border-dark">
-                            <td><?= $tarefa->ID ?></td>
-                            <td class="w-50"><?= $tarefa->TAREFA ?></td>
+                            <td class="w-50 d-flex justify-content-between"><?= $tarefa->TAREFA ?><a class=""><i class="text-warning bi bi-caret-down-fill"></i></a></td>
                             <td class="text-center"><?= $tarefa->INICIO ?></td>
                             <td class="text-center"><?= $tarefa->FIM ?></td>
                             <td><a href="./editar.php?id= <?= $tarefa->ID ?>" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></a></td>
