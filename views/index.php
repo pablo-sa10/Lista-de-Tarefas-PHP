@@ -1,9 +1,19 @@
 <?php
-
 require_once '../controller/tarefasController.php';
+
+session_start();
+//print_r($_SESSION);
+
+if((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true)){
+    unset($_SESSION['email']);
+    unset($_SESSION['senha']);
+    header('Location: ../login.php');
+}
 
 $tarefaRepositorio = new TarefaController();
 $dadosTarefa = $tarefaRepositorio->getTarefas();
+
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -19,10 +29,9 @@ $dadosTarefa = $tarefaRepositorio->getTarefas();
 
     <!--Js -->
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    <script src="../assets/main.js" defer></script>
 </head>
 
-<body>
+<body id="sucesso">
     <header>
         <nav class="navbar py-4 navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
@@ -37,6 +46,7 @@ $dadosTarefa = $tarefaRepositorio->getTarefas();
                         </li>
                     </ul>
                 </div>
+                <button class="btn btn-danger">SAIR</button>
             </div>
         </nav>
     </header>
@@ -59,7 +69,7 @@ $dadosTarefa = $tarefaRepositorio->getTarefas();
                             <td class="text-center"><?= $tarefa->INICIO ?></td>
                             <td class="text-center"><?= $tarefa->FIM ?></td>
                             <td><a href="./editar.php?id= <?= $tarefa->ID ?>" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></a></td>
-                            <td><button data-id="<?= $tarefa->ID ?>" name="excluir" class="botao btn btn-danger"><i class="bi bi-trash"></i></button></td>
+                            <td><a href="../controller/tarefasController.php?id=<?= $tarefa->ID ?>" name="excluir" class="botao btn btn-danger"><i class="bi bi-trash"></i></a></td>
                         </tr>
                     <?php endforeach ?>
                 </tbody>
@@ -76,39 +86,35 @@ $dadosTarefa = $tarefaRepositorio->getTarefas();
 </body>
 
 <script>
-
-        const btns = document.querySelectorAll('.botao')
-        btns.forEach((btn) => {
-            var id = $(this).data("id");
-            console.log('aquiii',id)
-            btn.addEventListener('click', (e)=>{
-                e.preventDefault()
-                
-            })
-        })
-    
     $(document).ready(function() {
 
-        
+        /* const btns = document.querySelectorAll('.botao')
+        btns.forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault()
+                const id = e.target.closest('.botao').getAttribute("data-id");
+                deletar(id);
+            }) */
+
 
         function deletar(id) {
-            console.log(id, 'aquii');
-            return;
-
-
 
             $.ajax({
-            type: "../controller/tarefasController.php",
-            url: "GET",
-            dataType: 'json',
-            data: {
-                method: 'getExcluir',
-                id: id,
-            },
-            success: function (response) {
-                console('excluiu')
-            }
-        });
+                url: "../controller/tarefasController.php",
+                type: "POST",
+                data: {
+                    method: 'getExcluir',
+                    id: id
+                },
+                success: function(response) {
+                    console.log('Resposta do servidor:', response);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Erro na requisição AJAX:', xhr.responseText);
+                    console.log('Status:', status);
+                    console.log('Erro:', error);
+                }
+            });
         }
 
     });
