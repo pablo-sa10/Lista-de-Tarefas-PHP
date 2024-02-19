@@ -19,6 +19,7 @@ if (isset($_POST['enviar']) && !empty($_POST['email']) && !empty($_POST['senha']
         header('Location: ../login.php');
     }
 } else {
+    /* echo "<p id='msg' class='text-danger'><i>Preencha todos os campos!</i></p>"; */
     header('Location: ../login.php');
 }
 

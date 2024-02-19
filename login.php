@@ -43,7 +43,9 @@
 
 <script>
     $(document).ready(()=>{
-        /* $('#botao').click((e)=>{
+       /*  $('#botao').click((e)=>{
+            e.preventDefault();
+            alert('alerta')
             $('#msg').show();
         }) */
     })
