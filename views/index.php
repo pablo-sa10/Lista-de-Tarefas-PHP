@@ -46,7 +46,7 @@ $dadosTarefa = $tarefaRepositorio->getTarefas();
                         </li>
                     </ul>
                 </div>
-                <button class="btn btn-danger">SAIR</button>
+                <a href="../controller/sair.php" class="btn btn-danger">SAIR</a>
             </div>
         </nav>
     </header>
