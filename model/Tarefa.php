@@ -90,8 +90,7 @@ class Tarefa
         $db = $db->getConexao();
 
         try {
-            $sql = "SELECT --ID, TAREFA, DESCRICAO, INICIO, FIM 
-            * 
+            $sql = "SELECT ID, TAREFA, DESCRICAO, CONVERT(VARCHAR(10), INICIO, 103) AS INICIO, CONVERT(VARCHAR(10), FIM, 103) AS FIM
             FROM tarefas";
 
             $busca = $db->prepare($sql);
@@ -124,7 +123,7 @@ class Tarefa
         $db = $db->getConexao();
 
         try {
-            $sql = "SELECT *--ID, TAREFA, DESCRICAO, INICIO, FIM 
+            $sql = "SELECT * --ID, TAREFA, DESCRICAO, CONVERT(VARCHAR(10), INICIO, 103), CONVERT(VARCHAR(10), FIM, 103)
             FROM tarefas
             WHERE ID = :id";
 

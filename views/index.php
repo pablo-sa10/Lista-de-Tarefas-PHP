@@ -4,7 +4,7 @@ require_once '../controller/tarefasController.php';
 session_start();
 //print_r($_SESSION);
 
-if((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true)){
+if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true)) {
     unset($_SESSION['email']);
     unset($_SESSION['senha']);
     header('Location: ../login.php');
@@ -13,8 +13,13 @@ if((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true)
 $tarefaRepositorio = new TarefaController();
 $dadosTarefa = $tarefaRepositorio->getTarefas();
 
-
+    if (isset($_POST['excluir'])) {
+        $id = $_POST['excluir'];
+        $tarefaRepositorio->getExcluir($id);
+        header('Location: ./');
+    }
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -69,7 +74,7 @@ $dadosTarefa = $tarefaRepositorio->getTarefas();
                             <td class="text-center"><?= $tarefa->INICIO ?></td>
                             <td class="text-center"><?= $tarefa->FIM ?></td>
                             <td><a href="./editar.php?id= <?= $tarefa->ID ?>" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></a></td>
-                            <td><a href="../controller/tarefasController.php?id=<?= $tarefa->ID ?>" name="excluir" class="botao btn btn-danger"><i class="bi bi-trash"></i></a></td>
+                            <td><button type="submit" name="excluir" value="<?= $tarefa->ID ?>" class="botao btn btn-danger"><i class="bi bi-trash"></i></button></td>
                         </tr>
                     <?php endforeach ?>
                 </tbody>
@@ -88,17 +93,17 @@ $dadosTarefa = $tarefaRepositorio->getTarefas();
 <script>
     $(document).ready(function() {
 
-        /* const btns = document.querySelectorAll('.botao')
-        btns.forEach((btn) => {
-            btn.addEventListener('click', (e) => {
-                e.preventDefault()
-                const id = e.target.closest('.botao').getAttribute("data-id");
-                deletar(id);
-            }) */
+        /* let btn = document.querySelectorAll('.botao')
+        console.log(btn)
 
+        btn.forEach(function (botao) { 
+            botao.addEventListener('click', (e)=>{
+                e.preventDefault()
+                deletar(botao.value)
+            })
+         })
 
         function deletar(id) {
-
             $.ajax({
                 url: "../controller/tarefasController.php",
                 type: "POST",
@@ -108,14 +113,9 @@ $dadosTarefa = $tarefaRepositorio->getTarefas();
                 },
                 success: function(response) {
                     console.log('Resposta do servidor:', response);
-                },
-                error: function(xhr, status, error) {
-                    console.error('Erro na requisição AJAX:', xhr.responseText);
-                    console.log('Status:', status);
-                    console.log('Erro:', error);
                 }
             });
-        }
+        } */
 
     });
 </script>
