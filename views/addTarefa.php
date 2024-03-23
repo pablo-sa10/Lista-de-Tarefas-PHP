@@ -60,7 +60,6 @@ if (isset($_POST['enviar'])) {
             <textarea class="w-100" name="descricao" rows="10"></textarea>
         </div>
         <div>
-           <!--  <p>Data de ínicio: <input type="date" name="inicio"></p> -->
             <p>Meta até: <input type="date" name="fim"></p>
         </div>
         <div class="d-flex justify-content-center mt-5 mb-3">

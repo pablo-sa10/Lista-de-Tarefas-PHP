@@ -37,6 +37,8 @@ $dadosTarefa = $tarefaRepositorio->getTarefas();
 </head>
 
 <body id="sucesso">
+
+    <p>dia <?= date("d/m/y"); ?></p>
     <header>
         <nav class="navbar py-4 navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">

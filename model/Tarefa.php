@@ -56,7 +56,7 @@ class Tarefa
         $db = $db->getConexao();
 
         try {
-            $sql = "INSERT INTO tarefas 
+            $sql = "INSERT INTO tarefa
             (TAREFA, DESCRICAO, INICIO, FIM)
             VALUES (:tarefa, :descricao, GETDATE(), :dataFim)";
 
@@ -91,7 +91,7 @@ class Tarefa
 
         try {
             $sql = "SELECT ID, TAREFA, DESCRICAO, CONVERT(VARCHAR(10), INICIO, 103) AS INICIO, CONVERT(VARCHAR(10), FIM, 103) AS FIM
-            FROM tarefas";
+            FROM tarefa";
 
             $busca = $db->prepare($sql);
             /* $busca->bindValue("tarefa", $tarefa, PDO::PARAM_STR);
@@ -109,7 +109,7 @@ class Tarefa
                     <h4 class='alert-heading'> <span class='fas fa-exclamation-triangle'></span>Atenção:<h4>
                     <hr/>
                     Erro de Consulta! $ex
-                    <h6>Notifique seu superior ou departamento de Tecnologia</h6>
+                    <h6>Notifique o desenvolvedor</h6>
                 </div>
             </a>";
             exit(); //NÃO DEIXA CONTINUAR A EXECUÇÃO
@@ -124,7 +124,7 @@ class Tarefa
 
         try {
             $sql = "SELECT * --ID, TAREFA, DESCRICAO, CONVERT(VARCHAR(10), INICIO, 103), CONVERT(VARCHAR(10), FIM, 103)
-            FROM tarefas
+            FROM tarefa
             WHERE ID = :id";
 
             $busca = $db->prepare($sql);
@@ -155,7 +155,7 @@ class Tarefa
         $db = $db->getConexao();
 
         try {
-            $sql = "UPDATE tarefas
+            $sql = "UPDATE tarefa
             SET TAREFA = :tarefa
             ,DESCRICAO = :descricao
             ,INICIO = :inicio
@@ -196,7 +196,7 @@ class Tarefa
             $db = $db->getConexao();
             $db->beginTransaction();
 
-            $sql = "DELETE FROM tarefas
+            $sql = "DELETE FROM tarefa
                      WHERE ID = :id";
 
             $busca = $db->prepare($sql);
